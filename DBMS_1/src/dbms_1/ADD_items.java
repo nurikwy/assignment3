@@ -280,7 +280,7 @@ int id;
         int confirm=JOptionPane.showConfirmDialog(this, "This will discard all chnages to inventory,Sure ?");
         if(confirm==JOptionPane.YES_OPTION)
         {
-            Home h=new Home();
+            Home h=new Home(id);
             this.hide();
             h.show();
             

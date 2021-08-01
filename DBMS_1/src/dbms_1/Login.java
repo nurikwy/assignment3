@@ -44,7 +44,7 @@ public class Login extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel4.setText("Hardware Management System");
+        jLabel4.setText("Medical Shop System");
 
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton1.setText("EXIT");
@@ -186,9 +186,9 @@ public class Login extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
         try{
-            Class.forName("java.postgresql.Driver");
-            BaseConnect mysql1 = new PostgreSQL();
-            con=mysql1.getConnection();
+            BaseConnect db = new PostgreSQL();
+            db.connect();
+            con=db.getConnection();
             //con = new PostgreSQL().getConnection();
             int sid;
             String pass,sql;
@@ -199,7 +199,7 @@ public class Login extends javax.swing.JFrame {
             else
             {
                 sid=Integer.parseInt(jTextField1.getText());
-                sql = "select * from credentials where sid="+sid+";";
+                sql = "select * from users where user_id="+sid+";";
                 Statement st=con.createStatement();
                 ResultSet rs=st.executeQuery(sql);
                 if(!rs.next())
@@ -215,7 +215,7 @@ public class Login extends javax.swing.JFrame {
                  }
                  else
                  {
-                  sql = "select * from credentials where pass='"+pass+"' and sid="+sid+";";
+                  sql = "select * from users where pass='"+pass+"' and user_id="+sid+";";
                   st=con.createStatement();
                   rs=st.executeQuery(sql);
                   if(!rs.next())
@@ -225,7 +225,7 @@ public class Login extends javax.swing.JFrame {
                   else
                   {
                     JOptionPane.showMessageDialog(null,"Your Login Was Successful");
-                    Home h=new Home();
+                    Home h=new Home(sid);
                     this.setVisible(false);//hide();
                     h.setVisible(true);//show();
                   }

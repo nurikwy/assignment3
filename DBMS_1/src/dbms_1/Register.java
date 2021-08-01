@@ -1,16 +1,21 @@
 
 package dbms_1;
+import dbms_1.SQL.BaseConnect;
+import dbms_1.SQL.PostgreSQL;
+
 import javax.swing.*;
 import java.sql.*;
 
 public class Register extends javax.swing.JFrame {
-    Connection con = Login.con;
+    BaseConnect db = new PostgreSQL();
+    Connection con;
     /**
      * Creates new form Register
      */
     public Register() {
         initComponents();
         setLocationRelativeTo(null);
+        jPanel2.hide();
     }
 
 
@@ -392,9 +397,10 @@ public class Register extends javax.swing.JFrame {
         else
         {
             try{
-                Class.forName("java.postgresql.Driver");
-                int sid,q[]=new int[8];
-                String pass,sql,sql1,sql2,name,add,email,contact1,contact2;
+                int sid;
+                db.connect();
+                con = db.getConnection();
+                String pass,sql,name,add,email,contact1,contact2;
                 sid=Integer.parseInt(jTextField1.getText());
                 name=jTextField2.getText();
                 add=jTextField3.getText();
@@ -402,26 +408,9 @@ public class Register extends javax.swing.JFrame {
                 contact2=jTextField5.getText();
                 email=jTextField6.getText();
                 pass=jPasswordField1.getText();
-                sql = "insert into shop values("+sid+",'"+name+"','"+add+"','"+contact1+"','"+contact2+"','"+email+"');";
+                sql = "insert into users values("+sid+",'"+name+"','"+add+"','"+contact1+"','"+contact2+"','"+email+"');";
                 Statement st=con.createStatement();
                 st.executeUpdate(sql);
-                q[0]=(int)jSpinner1.getValue();
-                q[1]=(int)jSpinner2.getValue();
-                q[2]=(int)jSpinner3.getValue();
-                q[3]=(int)jSpinner4.getValue();
-                q[4]=(int)jSpinner5.getValue();
-                q[5]=(int)jSpinner6.getValue();
-                q[6]=(int)jSpinner7.getValue();
-                q[7]=(int)jSpinner8.getValue();
-                sql2 = "insert into credentials values("+sid+",'"+pass+"');";
-                Statement st2=con.createStatement();
-                st2.executeUpdate(sql2);
-                for(int i=0,hd=311;i<8&&hd<=318;hd++,i++)
-                {
-                    sql1 = "insert into hwstock values("+sid+","+hd+","+q[i]+");";
-                    Statement st1=con.createStatement();
-                    st1.executeUpdate(sql1);
-                }
                 Login l=new Login(sid);
                         this.hide();
                         l.show();
@@ -432,7 +421,7 @@ public class Register extends javax.swing.JFrame {
             }
             catch (Exception e1)
             {
-             JOptionPane.showMessageDialog(null,"Already existing!");
+             JOptionPane.showMessageDialog(null,e1.getMessage());
             }
         }
         

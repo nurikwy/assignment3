@@ -6,3 +6,13 @@ create table medicine(
 	manufacturer varchar(32),
 	description varchar(64)
 );
+
+create table users(
+	user_id serial Primary Key,
+	pass varchar(32),
+	shop_name varchar(32),
+	shop_address varchar(32),
+	shop_phone1 varchar(32),
+	shop_phone2 varchar(32),
+	shop_email varchar(32)
+)

@@ -28,7 +28,7 @@ public class MedicineList extends javax.swing.JFrame {
         try{
 
             String sql,id,name,price,expire_date,manuf,definition;
-            sql = "select * from Medicine;";
+            sql = "select * from Medicine Order by expiration_date DESC;";
 
             ResultSet rs=database.selectSQL(sql);
 
@@ -73,7 +73,7 @@ public class MedicineList extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 30)); // NOI18N
-        jLabel1.setText("History ");
+        jLabel1.setText("Medicine list ");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -141,9 +141,9 @@ public class MedicineList extends javax.swing.JFrame {
                 .addGap(447, 447, 447)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(searchField))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                 )
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -158,9 +158,10 @@ public class MedicineList extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                ).addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -179,7 +180,7 @@ public class MedicineList extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        Home h=new Home();
+        Home h=new Home(userid);
         this.hide();
         h.show();
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -193,7 +194,7 @@ public class MedicineList extends javax.swing.JFrame {
         try{
             String sql,id,name,price,expire_date,manuf,definition,medicine_name;
             medicine_name= searchField.getText();
-            sql = "select * from medicine where name like('%" + medicine_name + "%');";
+            sql = "select * from medicine where name like('%" + medicine_name + "%') Order by expiration_date DESC;";
 
             ResultSet rs=database.selectSQL(sql);
 
