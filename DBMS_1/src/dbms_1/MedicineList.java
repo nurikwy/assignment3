@@ -68,7 +68,7 @@ public class MedicineList extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        searchField = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -87,7 +87,7 @@ public class MedicineList extends javax.swing.JFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true, false, false, true
+                false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -120,9 +120,8 @@ public class MedicineList extends javax.swing.JFrame {
             }
         });
 
-        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
-        jFormattedTextField1.setName(""); // NOI18N
-        jFormattedTextField1.addActionListener(new java.awt.event.ActionListener() {
+        searchField.setName(""); // NOI18N
+        searchField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jFormattedTextField1ActionPerformed(evt);
             }
@@ -142,7 +141,7 @@ public class MedicineList extends javax.swing.JFrame {
                 .addGap(447, 447, 447)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jFormattedTextField1))
+                    .addComponent(searchField))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 )
@@ -157,7 +156,7 @@ public class MedicineList extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -193,7 +192,7 @@ public class MedicineList extends javax.swing.JFrame {
         // TODO add your handling code here:
         try{
             String sql,id,name,price,expire_date,manuf,definition,medicine_name;
-            medicine_name=jFormattedTextField1.getText();
+            medicine_name= searchField.getText();
             sql = "select * from medicine where name like('%" + medicine_name + "%');";
 
             ResultSet rs=database.selectSQL(sql);
@@ -225,8 +224,8 @@ public class MedicineList extends javax.swing.JFrame {
         // TODO add your handling code here:
         try{
             String sql,id,name,price,expire_date,manuf,definition,medicine_id;
-            medicine_id=jFormattedTextField1.getText();
-            sql = "select * from medicine where medicine_id=1" + medicine_id;
+            medicine_id = searchField.getText();
+            sql = "select * from medicine where medicine_id=" + medicine_id;
 
             ResultSet rs=database.selectSQL(sql);
 
@@ -247,8 +246,6 @@ public class MedicineList extends javax.swing.JFrame {
                 definition=rs.getString("description");
                 model.addRow(new Object[] {id,name,price,expire_date,manuf,definition});
             }
-                        JOptionPane.showMessageDialog(null,medicine_id);
-
            }
         catch(Exception e)
         {
@@ -295,7 +292,7 @@ public class MedicineList extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JFormattedTextField searchField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
