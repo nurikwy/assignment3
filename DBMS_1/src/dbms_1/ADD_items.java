@@ -21,8 +21,11 @@ int id;
         initComponents();
         setLocationRelativeTo(null);
         db.connect();
-       id=x; 
-       jLabel2.setText("");
+        id=x;
+        jLabel2.setText("");
+        jTextField6.hide();
+
+
     }
 
 
@@ -66,10 +69,20 @@ int id;
         jRadioButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jRadioButton1.setSelected(true);
         jRadioButton1.setText("Add");
+        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton1ActionPerformed(evt);
+            }
+        });
 
         buttonGroup1.add(jRadioButton2);
         jRadioButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jRadioButton2.setText("Delete");
+        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -231,45 +244,6 @@ int id;
     private void jButton2ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
        
-       int hw=0,qty=(Integer)jSpinner1.getValue();
-       if(jComboBox1.getSelectedItem()=="CPU")
-       {
-           hw=311;       
-       }
-       else if(jComboBox1.getSelectedItem()=="Video Card")
-       {
-           hw=312;           
-       }
-       else if(jComboBox1.getSelectedItem()=="Motherboard")
-       {
-           hw=313;           
-       }
-       else if(jComboBox1.getSelectedItem()=="RAM")
-       {
-           hw=314;           
-       }
-       else if(jComboBox1.getSelectedItem()=="Storage")
-       {
-           hw=315;           
-       }
-       else if(jComboBox1.getSelectedItem()=="Power Supply")
-       {
-           hw=316;           
-       }
-       else if(jComboBox1.getSelectedItem()=="Cooler")
-       {
-           hw=317;           
-       }
-       else if(jComboBox1.getSelectedItem()=="Case")
-       {
-           hw=318;
-       }
-       if(jComboBox1.getSelectedItem()=="")
-       {
-           JOptionPane.showMessageDialog(null,"Select an item from list");
-       }
-       else
-       {
        try{
             String sql;
 
@@ -281,31 +255,16 @@ int id;
                 Statement stmt = con.createStatement();
                 stmt.executeUpdate(sql);
                 JOptionPane.showMessageDialog(this,"Changes are made to the inventory");
-                Inventory i=new Inventory(id);
-                this.hide();
-                i.show();
+                jButton1ActionPerformed(evt);
             }
             else if(jRadioButton2.isSelected())
             {
-               /* sql = "select * from hwstock where shopid="+id+";";
-                ResultSet rs= con.selectSQL(sql);
-                rs.next();
-                int x=Integer.parseInt(rs.getString("quantity"));
-                    if(x<qty)
-                    {
-                        JOptionPane.showMessageDialog(this,"There are not enough items to be removed from stock");
-                    }
-                else
-                {
-                    sql = "update hwstock set quantity=quantity-"+qty+" where shopid="+id+" and hid="+hw+";";
-
-                    con.updateSQL(sql);
-
-                    JOptionPane.showMessageDialog(this,"Changes are made to the inventory");
-                    Inventory i=new Inventory(id);
-                    this.hide();
-                    i.show();
-                }*/
+                sql = "delete from medicine where medicine_id="+jTextField1.getText()+";";
+                Connection con = db.getConnection();
+                Statement stmt = con.createStatement();
+                stmt.executeUpdate(sql);
+                JOptionPane.showMessageDialog(this,"Changes are made to the inventory");
+                jButton1ActionPerformed(evt);
             }
         }
 
@@ -313,7 +272,7 @@ int id;
         {
              JOptionPane.showMessageDialog(null,e.getMessage());
         }
-       }
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -342,6 +301,25 @@ int id;
         jRadioButton1.setSelected(true);
         jComboBox1.setSelectedIndex(0);
         jSpinner1.setValue(0);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        //        jTextField1.hide();
+        jTextField2.show();
+        jTextField3.show();
+        jTextField4.show();
+        jTextField5.show();
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        jTextField2.hide();
+        jTextField3.hide();
+        jTextField4.hide();
+        jTextField5.hide();
+        jTextField6.hide();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
